@@ -48,4 +48,20 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.05;
     public static final double TURN_CONSTANT    = 6;
   }
+
+
+  public static class ClimberConstants {
+    public static final int kClimberMotorPort1 = 21;
+    public static final int kClimberMotorPort2 = 22;
+    public static final Double kClimberSpeedPercentage = 0.6;
+ }
+
+
+  public static class IntakeShooterConstants {
+    public static final int kIntakeShooterMotorPort1 = 11;
+    public static final int kIntakeShooterMotorPort2 = 12;
+    public static final Double kIntakeShooterSpeedPercentage = 0.6;
+  }
+
+
 }
