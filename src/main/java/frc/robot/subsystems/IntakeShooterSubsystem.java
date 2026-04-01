@@ -38,7 +38,7 @@ public class IntakeShooterSubsystem extends SubsystemBase {
 
     public void setMotor1(double speed) {
         SmartDashboard.putNumber("Intake Shooter speed 1", speed);
-        intakeShooterMotor1.set(-speed);
+        intakeShooterMotor1.set(speed);
     }
 
     public void setMotor2(double speed) {
