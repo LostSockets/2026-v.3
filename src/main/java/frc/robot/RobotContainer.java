@@ -214,6 +214,7 @@ public class RobotContainer
       operatorXbox.start().whileTrue(Commands.none());
       operatorXbox.back().whileTrue(Commands.none());
       operatorXbox.leftBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
+      operatorXbox.rightBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1));
       //operatorXbox.leftBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
       //operatorXbox.rightBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
       //operatorXbox.rightBumper().onTrue(Commands.none());    
