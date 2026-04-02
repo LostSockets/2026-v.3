@@ -26,11 +26,13 @@ import frc.robot.commands.ClimberButtonCommand;
 import frc.robot.commands.ClimberPIDCommand;
 import frc.robot.commands.IntakeButtonCommand;
 import frc.robot.commands.IntakeShooterButtonCommand;
+import frc.robot.commands.ShooterButtonCommand;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeShooterSubsystem;
 
 /**
@@ -50,6 +52,7 @@ public class RobotContainer
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   //private final IntakeShooterSubsystem intakeShooterSubsystem = new IntakeShooterSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Establish a Sendable Chooser that will be able to be sent to the SmartDashboard, allowing selection of desired auto
   private final SendableChooser<Command> autoChooser;
@@ -215,9 +218,9 @@ public class RobotContainer
       operatorXbox.back().whileTrue(Commands.none());
       operatorXbox.leftBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
       operatorXbox.rightBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1));
+      operatorXbox.rightTrigger(0.5).whileTrue(new ShooterButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
       //operatorXbox.leftBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
       //operatorXbox.rightBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
-      //operatorXbox.rightBumper().onTrue(Commands.none());    
     }
 
   }
