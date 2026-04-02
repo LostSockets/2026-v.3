@@ -198,7 +198,7 @@ public class RobotContainer
     } else
     {
       driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.x().onTrue(Commands.runOnce(drivebase::addFakeVisionReading));
+      driverXbox.x().onTrue(Commands.none());
       driverXbox.start().whileTrue(Commands.none());
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
@@ -206,12 +206,12 @@ public class RobotContainer
 
       operatorXbox.a().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos0)));
       operatorXbox.b().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos1)));
-      operatorXbox.x().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage)));
-      operatorXbox.y().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage* -1)));
+      operatorXbox.x().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage* -1)));
+      operatorXbox.y().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage)));
       operatorXbox.start().whileTrue(Commands.none());
       operatorXbox.back().whileTrue(Commands.none());
-      operatorXbox.leftBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
-      operatorXbox.rightBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
+      operatorXbox.leftBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, 1));
+      operatorXbox.rightBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1, -1));
       //operatorXbox.rightBumper().onTrue(Commands.none());    
     }
 

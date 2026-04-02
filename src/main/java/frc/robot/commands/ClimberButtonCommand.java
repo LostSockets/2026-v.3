@@ -8,9 +8,6 @@ import frc.robot.subsystems.ClimberSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
-import frc.robot.Constants.ClimberConstants;
-
-
 /** An example command that uses an example subsystem. */
 public class ClimberButtonCommand extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")

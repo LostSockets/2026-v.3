@@ -51,9 +51,9 @@ public final class Constants
 
 
   public static class ClimberConstants {
-    public static final int kClimberMotorPort1 = 21;
-    public static final int kClimberMotorPort2 = 22;
-    public static final Double kClimberSpeedPercentage = 0.8;
+    public static final int kClimberMotorPort1 = 11;
+    public static final int kClimberMotorPort2 = 12;
+    public static final Double kClimberSpeedPercentage = 0.3;
 
     public static final double kP = 0.1; //0.08; // PID numbers need to be figured out still!!!!!!!!
     public static final double kI = 0;
@@ -71,8 +71,8 @@ public final class Constants
 
 
   public static class IntakeShooterConstants {
-    public static final int kIntakeShooterMotorPort1 = 11;
-    public static final int kIntakeShooterMotorPort2 = 12;
+    public static final int kIntakeShooterMotorPort1 = 21;
+    public static final int kIntakeShooterMotorPort2 = 22;
     public static final Double kIntakeShooterSpeedPercentage = 0.6;
   }
 
