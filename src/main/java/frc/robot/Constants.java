@@ -73,7 +73,7 @@ public final class Constants
   public static class IntakeShooterConstants {
     public static final int kIntakeShooterMotorPort1 = 21;
     public static final int kIntakeShooterMotorPort2 = 22;
-    public static final Double kIntakeShooterSpeedPercentage = 0.6;
+    public static final Double kIntakeShooterSpeedPercentage = 1.0;
   }
 
 
