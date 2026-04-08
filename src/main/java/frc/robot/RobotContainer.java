@@ -211,8 +211,8 @@ public class RobotContainer
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
 
-      operatorXbox.a().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos0)));
-      operatorXbox.b().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos1)));
+      //operatorXbox.a().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos0)));
+      //operatorXbox.b().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos1)));
       operatorXbox.x().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage* -1)));
       operatorXbox.y().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage)));
       operatorXbox.start().whileTrue(Commands.none());
@@ -220,6 +220,7 @@ public class RobotContainer
       operatorXbox.leftBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
       operatorXbox.rightBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1));
       operatorXbox.rightTrigger(0.5).whileTrue(new ShooterButtonCommand(shooterSubsystem, 1));
+      operatorXbox.leftTrigger(0.5).whileTrue(new ShooterButtonCommand(shooterSubsystem, -1));
       //operatorXbox.leftBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1, -1));
       //operatorXbox.rightBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
     }
