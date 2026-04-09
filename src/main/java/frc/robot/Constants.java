@@ -60,12 +60,12 @@ public final class Constants
     public static final double kD = 0;
 
     //NOTE: CHANGE THESE VALUES TO MATCH THE REAL ROBOT ONCE WE KNOW WHAT THEY ARE
-    public static final double kmaxClimberHeight = -24.0;
+/*    public static final double kmaxClimberHeight = -24.0;
     public static final double kminClimberHeight = 0.0;
     public static final double kClimberPos0 = 0.0; //A
     public static final double kClimberPos1 = -8.0; //B
     public static final double kClimberPos2 = -22.0; //X
-    public static final double kClimberPos3 = -10.2; //Y
+    public static final double kClimberPos3 = -10.2; //Y  */
 
  }
 
