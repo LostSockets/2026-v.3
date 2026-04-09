@@ -201,15 +201,16 @@ public class RobotContainer
       driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.back().whileTrue(drivebase.centerModulesCommand());
       driverXbox.leftBumper().onTrue(Commands.none());
-      driverXbox.rightBumper().onTrue(Commands.none());
+      driverXbox.rightBumper().whileTrue(driveRobotOrientedAngularVelocity);
+      
     } else
     {
-      driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      driverXbox.a().onTrue(Commands.none());
       driverXbox.x().onTrue(Commands.none());
-      driverXbox.start().whileTrue(Commands.none());
+      driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-      driverXbox.rightBumper().onTrue(Commands.none());
+      driverXbox.rightBumper().whileTrue(driveRobotOrientedAngularVelocity);
 
       //operatorXbox.a().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos0)));
       //operatorXbox.b().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos1)));
