@@ -1,0 +1,19 @@
+[
+  {
+    "name": "/SmartDashboard/Auto Selector",
+    "type": "string",
+    "value": "",
+    "properties": {
+      "persistent": true,
+      "retained": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/Auto Mode/options",
+    "type": "string[]",
+    "value": ["Do Nothing", "Red Left Auto", "Red Center Auto", "Red Right Auto", "Blue Left Auto", "Blue Center Auto", "Blue Right Auto"],
+    "properties": {
+      "persistent": true
+    }
+  }
+]

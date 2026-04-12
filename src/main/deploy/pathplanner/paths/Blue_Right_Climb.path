@@ -1,0 +1,66 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.3396153846153855,
+        "y": 2.2442564102564098
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.409435897441712,
+        "y": 4.325705128205128
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.02562820513402,
+        "y": 3.6628974358974364
+      },
+      "prevControl": {
+        "x": 1.2731155785493118,
+        "y": 3.6982527749567633
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "ShootBALL",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ShootBALL"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 178.92917554521307
+  },
+  "reversed": false,
+  "folder": "Blue_Climb",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 50.33442997729033
+  },
+  "useDefaultConstraints": false
+}

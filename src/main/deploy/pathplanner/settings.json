@@ -2,8 +2,22 @@
   "robotWidth": 0.9,
   "robotLength": 0.9,
   "holonomicMode": true,
-  "pathFolders": [],
-  "autoFolders": [],
+  "pathFolders": [
+    "Blue_Climb",
+    "Blue_DriveBack",
+    "Blue_Shoot",
+    "Red_DriveBack",
+    "Red_Climb",
+    "Red_Shoot"
+  ],
+  "autoFolders": [
+    "Blue_Auto",
+    "Blue_DriveBack_Auto",
+    "Blue_Shooter_Auto",
+    "Red_Auto",
+    "Red_DriveBack_Auto",
+    "Red_Shooter_Auto"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

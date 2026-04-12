@@ -5,7 +5,9 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.auto.CommandUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,10 +17,14 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
@@ -34,6 +40,8 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 //import frc.robot.subsystems.IntakeShooterSubsystem;
+import edu.wpi.first.cameraserver.CameraServer;
+
 
 
 /**
@@ -41,8 +49,7 @@ import frc.robot.subsystems.ShooterSubsystem;
  * little robot logic should actually be handled in the {@link Robot} periodic methods (other than the scheduler calls).
  * Instead, the structure of the robot (including subsystems, commands, and trigger mappings) should be declared here.
  */
-public class RobotContainer
-{
+public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -54,10 +61,14 @@ public class RobotContainer
   //private final IntakeShooterSubsystem intakeShooterSubsystem = new IntakeShooterSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-
+  
+  //commands
+  private final ShooterButtonCommand shooterCommand;
+  private final ClimberButtonCommand climberCommand;
+  private final IntakeButtonCommand intakeCommand;
   // Establish a Sendable Chooser that will be able to be sent to the SmartDashboard, allowing selection of desired auto
-  private final SendableChooser<Command> autoChooser;
-
+  private final SendableChooser<Command>
+  autoChooser = new SendableChooser<>();
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
@@ -110,33 +121,51 @@ public class RobotContainer
                                                                                .translationHeadingOffset(true)
                                                                                .translationHeadingOffset(Rotation2d.fromDegrees(
                                                                                    0));
-
+  
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer()
-  {
+  {   
+      
+      //Subsystems
+      //shooterSubsystem = new ShooterSubsystem();
       // Configure the trigger bindings
       configureBindings();
       DriverStation.silenceJoystickConnectionWarning(true);
-      
+      intakeCommand = new IntakeButtonCommand(intakeSubsystem, 1);
+      shooterCommand = new ShooterButtonCommand(shooterSubsystem, 1);
+      climberCommand = new ClimberButtonCommand(climberSubsystem, 1);
       //Create the NamedCommands that will be used in PathPlanner
-      NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-
-      //Have the autoChooser pulpul in all PathPlanner autos as options
-      autoChooser = AutoBuilder.buildAutoChooser();
-
+      NamedCommands.registerCommand("ShootBALL", shooterCommand);
+      NamedCommands.registerCommand("Levitate_up", climberCommand);
+      NamedCommands.registerCommand("IntakeStart", intakeCommand);
       //Set the default auto (do nothing) 
-      autoChooser.setDefaultOption("Do Nothing", Commands.none());
+      autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
 
       //Add a simple auto option to have the robot drive forward for 1 second then stop
-      autoChooser.addOption("Drive Forward", drivebase.driveForward().withTimeout(1));
-      
+      //autoChooser.addOption("Drive Forward", drivebase.driveForward().withTimeout(1));
+      autoChooser.addOption("Red 1 Auto", new PathPlannerAuto("Red_Left_DriveBack_Auto"));
+      autoChooser.addOption("Red 2 Auto", new PathPlannerAuto("Red_Center_DriveBack_Auto"));
+      autoChooser.addOption("Red 3 Auto", new PathPlannerAuto("Red_Right_DriveBack_Auto"));
+      autoChooser.addOption("Blue 1 Auto", new PathPlannerAuto("Blue_Test_DriveBack_Auto"));
+      autoChooser.addOption("Blue 2 Auto", new PathPlannerAuto("Blue_Center_DriveBack_Auto"));
+      autoChooser.addOption("Blue 3 Auto", new PathPlannerAuto("Blue_Right_DriveBack_Auto"));
+      autoChooser.addOption("Red 1 Shooter", new PathPlannerAuto("Red_Left_Shooter_Auto"));
+      autoChooser.addOption("Red 2 Shooter", new PathPlannerAuto("Red_Center_Shooter_Auto"));
+      autoChooser.addOption("Red 3 Shooter", new PathPlannerAuto("Red_Right_Shooter_Auto"));
+      autoChooser.addOption("Blue 1 Shooter", new PathPlannerAuto("Blue_Left_Shooter_Auto"));
+      autoChooser.addOption("Blue 2 Shooter", new PathPlannerAuto("Blue_Center_Shooter_Auto"));
+      autoChooser.addOption("Blue 3 Shooter", new PathPlannerAuto("Blue_Right_Shooter_Auto"));
       //Put the autoChooser on the SmartDashboard
-      SmartDashboard.putData("Auto Chooser", autoChooser);
-
-
-
+      SmartDashboard.putData("Auto Selector", autoChooser);
+      SmartDashboard.putString("Selected Auto", autoChooser.getSelected().getName());
+      SmartDashboard.updateValues();
+     var driverTab = Shuffleboard.getTab("DriverTab");
+     driverTab.getLayout("Auto Selector", BuiltInLayouts.kList)
+            .withSize(4, 2)
+            .withPosition(0, 0)
+            .add("Auto Mode", autoChooser);
   }
 
   /**
@@ -211,7 +240,7 @@ public class RobotContainer
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
 
-      //operatorXbox.a().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos0)));
+      operatorXbox.a().whileTrue(new ShooterButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
       //operatorXbox.b().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos1)));
       operatorXbox.x().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage* -1)));
       operatorXbox.y().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage)));
@@ -219,8 +248,8 @@ public class RobotContainer
       operatorXbox.back().whileTrue(Commands.none());
       operatorXbox.leftBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
       operatorXbox.rightBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1));
-      operatorXbox.rightTrigger(0.5).whileTrue(new ShooterButtonCommand(shooterSubsystem, 1));
-      operatorXbox.leftTrigger(0.5).whileTrue(new ShooterButtonCommand(shooterSubsystem, -1));
+      operatorXbox.rightTrigger(0.5).whileTrue(new ShooterButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentageFull));
+      operatorXbox.leftTrigger(0.5).whileTrue(new ShooterButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage*-1));
       //operatorXbox.leftBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1, -1));
       //operatorXbox.rightBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
     }
