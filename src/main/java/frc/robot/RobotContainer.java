@@ -148,7 +148,7 @@ public class RobotContainer {
       autoChooser.addOption("Red 1 Auto", new PathPlannerAuto("Red_Left_DriveBack_Auto"));
       autoChooser.addOption("Red 2 Auto", new PathPlannerAuto("Red_Center_DriveBack_Auto"));
       autoChooser.addOption("Red 3 Auto", new PathPlannerAuto("Red_Right_DriveBack_Auto"));
-      autoChooser.addOption("Blue 1 Auto", new PathPlannerAuto("Blue_Test_DriveBack_Auto"));
+      autoChooser.addOption("Blue 1 Auto", new PathPlannerAuto("Blue_Left_DriveBack_Auto"));
       autoChooser.addOption("Blue 2 Auto", new PathPlannerAuto("Blue_Center_DriveBack_Auto"));
       autoChooser.addOption("Blue 3 Auto", new PathPlannerAuto("Blue_Right_DriveBack_Auto"));
       autoChooser.addOption("Red 1 Shooter", new PathPlannerAuto("Red_Left_Shooter_Auto"));

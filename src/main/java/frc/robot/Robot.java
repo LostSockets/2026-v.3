@@ -12,8 +12,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.lib.MatchTime;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.epilogue.Logged;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
  * described in the TimedRobot documentation. If you change the name of this class or the package after creating this
@@ -21,7 +22,8 @@ import edu.wpi.first.cscore.UsbCamera;
  */
 public class Robot extends TimedRobot
 {
-
+  @Logged(name = "MatchTime")
+  private final MatchTime matchTime = new MatchTime(2026);
   private static Robot   instance;
   private        Command m_autonomousCommand;
 
@@ -47,18 +49,12 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit()
   {
-    var camera =
+    /**var camera =
     CameraServer.startAutomaticCapture();
     CameraServer.getVideo();
     camera.setResolution(1280,720);
-    camera.setFPS(15);
-
-    /**ShuffleboardTab tab = 
-    Shuffleboard.getTab("DriverTab");
-
-    tab.addCamera("Driver Cam", camera.getName(), camera.getName())
-      .withSize(4,3)
-      .withPosition(5, 0);*/
+    camera.setFPS(15);*/
+    matchTime.update(MatchTime.kGameData2026.get());
     
     
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our

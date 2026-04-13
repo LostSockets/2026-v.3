@@ -37,7 +37,7 @@
       "waypointRelativePos": 0.0,
       "endWaypointRelativePos": null,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
           "commands": [
             {
