@@ -49,11 +49,11 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit()
   {
-    /**var camera =
+    var camera =
     CameraServer.startAutomaticCapture();
     CameraServer.getVideo();
     camera.setResolution(1280,720);
-    camera.setFPS(15);*/
+    camera.setFPS(15);
     matchTime.update(MatchTime.kGameData2026.get());
     
     
