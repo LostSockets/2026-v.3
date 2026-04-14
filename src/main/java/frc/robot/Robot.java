@@ -52,8 +52,8 @@ public class Robot extends TimedRobot
     var camera =
     CameraServer.startAutomaticCapture();
     CameraServer.getVideo();
-    camera.setResolution(1280,720);
-    camera.setFPS(15);
+    camera.setResolution(256,144);
+    camera.setFPS(60);
     matchTime.update(MatchTime.kGameData2026.get());
     
     
