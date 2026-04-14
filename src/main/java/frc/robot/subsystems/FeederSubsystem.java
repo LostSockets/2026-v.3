@@ -8,18 +8,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class FeederSubsystem extends SubsystemBase {
 
-    private final SparkMax intakeMotor = new SparkMax(Constants.IntakeShooterConstants.kIntakeShooterMotorPort1, MotorType.kBrushless);
-    private final RelativeEncoder intakeEncoder = intakeMotor.getEncoder();
+    private final SparkMax feederMotor = new SparkMax(Constants.IntakeShooterConstants.kIntakeShooterMotorPort2, MotorType.kBrushless);
+    private final RelativeEncoder feederEncoder = feederMotor.getEncoder();
 
     
     public double getEncoderMeters() {
-        return (((RelativeEncoder) intakeEncoder).getPosition());
+        return (((RelativeEncoder) feederEncoder).getPosition());
       }
     
 
-    public IntakeSubsystem () {
+    public FeederSubsystem () {
     }
 
     @Override
@@ -30,8 +30,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void setMotor(double speed) {
         //armPivotMotorFollow.follow(armPivotMotorLead);
-        SmartDashboard.putNumber("Intake speed", speed);
-        intakeMotor.set(-speed);
+        SmartDashboard.putNumber("Feeder speed", speed);
+        feederMotor.set(-speed);
     }
 
 }

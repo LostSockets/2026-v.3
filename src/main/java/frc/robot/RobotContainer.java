@@ -30,15 +30,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ClimberButtonCommand;
 //import frc.robot.commands.ClimberPIDCommand;
-import frc.robot.commands.IntakeButtonCommand;
+import frc.robot.commands.IntakeShooterButtonCommand;
 //import frc.robot.commands.IntakeShooterButtonCommand;
-import frc.robot.commands.ShooterButtonCommand;
+import frc.robot.commands.FeederButtonCommand;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
 import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeShooterSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
 //import frc.robot.subsystems.IntakeShooterSubsystem;
 import edu.wpi.first.cameraserver.CameraServer;
 
@@ -59,13 +59,13 @@ public class RobotContainer {
                                                                                 "swerve/maxSwerve"));
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   //private final IntakeShooterSubsystem intakeShooterSubsystem = new IntakeShooterSubsystem();
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final IntakeShooterSubsystem intakeSubsystem = new IntakeShooterSubsystem();
+  private final FeederSubsystem shooterSubsystem = new FeederSubsystem();
   
   //commands
-  private final ShooterButtonCommand shooterCommand;
+  private final FeederButtonCommand shooterCommand;
   private final ClimberButtonCommand climberCommand;
-  private final IntakeButtonCommand intakeCommand;
+  private final IntakeShooterButtonCommand intakeCommand;
   // Establish a Sendable Chooser that will be able to be sent to the SmartDashboard, allowing selection of desired auto
   private final SendableChooser<Command>
   autoChooser = new SendableChooser<>();
@@ -133,8 +133,8 @@ public class RobotContainer {
       // Configure the trigger bindings
       configureBindings();
       DriverStation.silenceJoystickConnectionWarning(true);
-      intakeCommand = new IntakeButtonCommand(intakeSubsystem, 1);
-      shooterCommand = new ShooterButtonCommand(shooterSubsystem, 1);
+      intakeCommand = new IntakeShooterButtonCommand(intakeSubsystem, 1);
+      shooterCommand = new FeederButtonCommand(shooterSubsystem, 1);
       climberCommand = new ClimberButtonCommand(climberSubsystem, 1);
       //Create the NamedCommands that will be used in PathPlanner
       NamedCommands.registerCommand("ShootBALL", shooterCommand);
@@ -241,16 +241,16 @@ public class RobotContainer {
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().whileTrue(driveRobotOrientedAngularVelocity);
 
-      operatorXbox.a().whileTrue(new ShooterButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
+      operatorXbox.a().whileTrue(new FeederButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
       //operatorXbox.b().onTrue((new ClimberPIDCommand(climberSubsystem, Constants.ClimberConstants.kClimberPos1)));
       operatorXbox.x().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage* -1)));
       operatorXbox.y().whileTrue((new ClimberButtonCommand(climberSubsystem, Constants.ClimberConstants.kClimberSpeedPercentage)));
       operatorXbox.start().whileTrue(Commands.none());
       operatorXbox.back().whileTrue(Commands.none());
-      operatorXbox.leftBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
-      operatorXbox.rightBumper().whileTrue(new IntakeButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1));
-      operatorXbox.rightTrigger(0.5).whileTrue(new ShooterButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentageFull));
-      operatorXbox.leftTrigger(0.5).whileTrue(new ShooterButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage*-1));
+      operatorXbox.leftBumper().whileTrue(new IntakeShooterButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
+      operatorXbox.rightBumper().whileTrue(new IntakeShooterButtonCommand(intakeSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1));
+      operatorXbox.rightTrigger(0.5).whileTrue(new FeederButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentageFull));
+      operatorXbox.leftTrigger(0.5).whileTrue(new FeederButtonCommand(shooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage*-1));
       //operatorXbox.leftBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage * -1, -1));
       //operatorXbox.rightBumper().whileTrue(new IntakeShooterButtonCommand(intakeShooterSubsystem, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage, Constants.IntakeShooterConstants.kIntakeShooterSpeedPercentage));
     }
