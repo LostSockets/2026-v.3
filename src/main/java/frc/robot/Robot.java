@@ -8,13 +8,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.lib.MatchTime;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.util.PixelFormat;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
  * described in the TimedRobot documentation. If you change the name of this class or the package after creating this
@@ -24,6 +25,11 @@ public class Robot extends TimedRobot
 {
   @Logged(name = "MatchTime")
   private final MatchTime matchTime = new MatchTime(2026);
+  private final StructPublisher<MatchTime> matchTimeTopic = 
+        NetworkTableInstance.getDefault()
+          .getTable("Robot")
+          .getStructTopic("MatchTime", MatchTime.struct)
+          .publish();
   private static Robot   instance;
   private        Command m_autonomousCommand;
 
@@ -52,9 +58,11 @@ public class Robot extends TimedRobot
     var camera =
     CameraServer.startAutomaticCapture();
     CameraServer.getVideo();
-    camera.setResolution(256,144);
-    camera.setFPS(60);
-    matchTime.update(MatchTime.kGameData2026.get());
+    camera.setResolution(1280,720);
+    camera.setFPS(30);
+    camera.setPixelFormat(PixelFormat.kMJPEG);
+    
+    
     
     
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -81,6 +89,8 @@ public class Robot extends TimedRobot
   @Override
   public void robotPeriodic()
   {
+    matchTime.update(MatchTime.kGameData2026.get());
+    matchTimeTopic.set(matchTime);
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
